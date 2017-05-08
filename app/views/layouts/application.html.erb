@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Insaniyat</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', "rails.validations","rails.validations.simple_form",'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+<!-- ************************************ NavBar ************************************ -->
+		<div id="navbar">
+			<div class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a href="Index.html" class="brand">
+							<%= link_to root_path do %>
+		   					<%= image_tag 'web_logo.png', class:"img-fluid", id:"img_logo", alt:"Responsive Image" %>
+							<% end %>
+						</a>
+					</div>
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-nav" id="navbar_font_handle">
+							<li>
+								<%= link_to "Home", root_url %>
+							</li>
+							<li>
+								<%= link_to "Lost/Found Someone?" ,nil, {'data-toggle' => 'modal' , 'data-target' => '#modal-fullscreen' , :onClick => 'scrollopen()' , :remote => true} %>
+							</li>
+							<li>
+								<a href="#search">Search</a>
+							</li>
+							<li>
+								<%= link_to "About", about_posts_path %>
+							</li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right" id="navbar_font_handle">
+							<% if session[:u] == nil %>
+								<li>
+									<a href="#" data-toggle="modal" data-target="#logIn"><span class="glyphicon glyphicon-log-in"></span> <strong>Login</strong></a>
+								</li>
+								<li>
+									<a href="#" id="signupM" data-toggle="modal" data-target="#signUp"><span class="glyphicon glyphicon-user"></span><strong>SignUp</strong></a>
+								</li>	
+							<% else%>
+								<% us = User.new(session[:u])%>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong><%= us.name%></strong> <b class="caret"></b></a>
+		          			<ul class="dropdown-menu">
+		            			<li><a href="#">Profile</a></li>
+		            			<li><a href="#">Settings</a></li>
+		            			<li class="divider"></li>
+		            			<li><%= link_to "Logout","/users/logout"%></li>
+		          			</ul>
+		        		</li>
+							<% end%>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+			<!-- ************************* LogIn Window Code **************************** -->
+			<div class="container">
+				<div class="modal fade" id="logIn">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<!-- Header -->
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h3 class="modal-title">Log In</h3>
+							</div>
+							<%= form_for :user do |l|%>					
+							<!-- Body (form) -->
+							<div class="modal-body">
+									<div class="form-group">
+										<%= l.number_field :phoneno, {class:"form-control",placeholder:"Enter Phone Number", id:"loginphoneno",:required => true}%>
+									</div>
+									<div class="form-group">
+										<%= l.password_field :password, {class:"form-control", placeholder:"Password", id: 'loginpassword',:required => true}%>
+									</div>
+							</div>
+							<!-- Submit Button (footer)-->
+							<div class="modal-footer">
+								<%= l.submit 'Login' ,class:'btn btn-primary', id: 'loginclick'%>
+							</div>
+							<% end%>
+						</div>
+					</div>
+				</div>
+				<!-- ***************************** Log In Window code End ******************************* -->
+				<!-- ***************************** Sign Up Window Code ***********************************-->
+				<div class="modal fade" id="signUp">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<!-- Header -->
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h3 class="modal-title">Sign Up</h3>
+							</div>
+							<%= form_for User.new ,method: :post , :validate => true do |u|%>
+							<!-- Body (form) -->
+							<div class="modal-body">
+								<div class="form-group">
+									<%= u.text_field :name, {class:"form-control", placeholder:"Name",id:'signupname', :required => true}%>
+								</div>
+								<div class="form-group">
+									<%= u.number_field :phoneno, {class:"form-control", placeholder:"Phone Number",id:'signupphoneno',:required => true}%>
+								</div>
+								<div class="form-group">
+									<%= u.password_field :password, {class:"form-control", placeholder:"Password",id:'signuppassword',required:true}%>
+								</div>
+							</div>
+							<!-- Submit Button (footer)-->
+							<div class="modal-footer">
+								<%= u.submit  class:'btn btn-primary' , id:'signupclick'%>
+							</div>
+							<% end%>
+						</div>
+					</div>
+				</div>
+				<!-- *********************** End of SignUp Winndow ******************************** -->
+				<%= render 'layouts/postmodal' %>
+
+
+
+    <!-- Main Body Code-->
+    <div class="row bodypanel" style="padding-top: 8%" id="head">
+		<div class="col-md-8">
+    		<%= yield %>
+    	</div>
+ <!-- ********************************* Start of Search Side Bar ******************************* -->
+		<div class="col-sm-4" id="searchDiv">
+			<div class="panel panel-default search" style="height:83%;position: fixed; overflow-y: scroll;">
+				<div class="panel-heading">Search Persons</div>
+				<div class="panel-body">
+					<%= form_for :post do |f|%>
+					<div class="form-group">
+						<p>To optimize your search rresults,provide picture of </p>
+						<p>person with a clear face to do search by picture.</p>
+						<div class="row">
+							<div class="col-md-1">
+								<div id="image-holder"></div>
+							</div>		
+						</div>
+						<input id="fileUpload" type="file" class="btn-success"/> 
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<label>Enter Date and Time You want to search from:</label>
+							<input type="datetime-local" class="form-control" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:name, "Name:")%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= f.text_field  :name,class:"form-control Name" , placeholder:'Name (Optional)'%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:fathername, "Father Name:") %>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= f.text_field :fathername, class:"form-control FatherName" , placeholder:"Father Name (Optional)"%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:age, "Age:")%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= select_tag "age", options_for_select([ "1-5", "6-8", "9-12" , "13-15", "16-18", "19-22", "23-25", "25-35", "35-50", "Greater than 50 years" ], "Optional") , {class:"form-control" , prompt:"Optional"}%> 		
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:personcolor , "Face Color:")%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= select_tag "facecolor", options_for_select([ "White" , "Black" , "Brown" , "Light Brown" , "Dark Brown" ]) , {class:"form-control" , prompt:"Optional"}%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:gender , "Gender")%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= select_tag "gender", options_for_select([ "Male" , "Female" ], "N/A") , {class:"form-control" , prompt:"Optional"}%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:specialPerson , "Special Person:")%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= select_tag "gender", options_for_select([ "Yes" , "No" ]) , {class:"form-control" , prompt:"....."}%>
+						</div>
+					</div><br>
+					<div class="row">
+					<center>
+						<div class="col-sm-12">
+							<span class="icon-input-btn btn-success"><span class="glyphicon glyphicon-search"></span> 
+							<%= f.submit :post , class:"btn btn-success"%></span>
+						</div>
+						</center>
+					</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+<!-- ************************************ End of Search Side Bar *********************************** -->
+    </div>
+  </body>
+</html>

@@ -1,0 +1,139 @@
+<!-- *************************** Start Script for Uploading Image in Post ************************* -->
+<script>
+	$(document).ready(function() {
+		$("#post-upload").on('change', function() {
+			//Get count of selected files
+			var countFiles = $(this)[0].files.length;
+			var imgPath = $(this)[0].value;
+			var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+			var image_holder = $("#postImage-holder");
+			image_holder.empty();
+			if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+				if (typeof(FileReader) != "undefined") {
+					//loop for each file selected for uploaded.
+					for (var i = 0; i < countFiles; i++) 
+					{
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							$('#postimg').attr('src', e.target.result);
+						}
+						image_holder.show();
+						reader.readAsDataURL($(this)[0].files[i]);
+					}
+				} else {
+					alert("This browser does not support FileReader.");
+				}
+			}else {
+				alert("Please select only images");
+			}
+		});
+	});
+</script>
+<!-- *************************** End Script for Uploading Image in Post ************************* -->
+
+<% us = User.new(session[:u])%>
+<%= form_for :post, :url=> {:controller => :posts, :action=>:makepost, :id=>us.id, html: {multipart: true} } do |f| %>
+	<div class="modal-body">
+		<div class="row" style="margin-top: -0.5em;">
+			<div class="col-md-4">
+				<center>
+	    		<img src="/images/Unknown_Person.png" id="postimg" class="img-thumbnail" style="width:36em;height:13em;" />
+				</center>
+				<%= f.file_field :image, accept: 'image/*', id:"post-upload", type:"file", class:"btn btn-success form-control"%>
+				<%= f.label "Picture of person You lost/found with clear face *", { class:"postHeading", style:"margin-top: -1px;"} %>
+				<br></br>
+				<%= f.radio_button :status, "lost" %>
+				<%= f.label :status, " Lost Someone?", {:value => "lost", class:"radioHeading" }%>
+				<br>
+				<%= f.radio_button :status, "found" %>
+				<%= f.label :status, " Found Someone?", {:value => "found", class:"radioHeading" } %>
+			</div>
+			<div class="col-md-4">
+				<%= f.label :place, "Where did You lost/found the person? *", {class:"postHeading", style:"margin-top: -2px;", :required=>true} %>
+				<%= f.text_field :place, {class:"form-control" , placeholder:"Enter Place here", :required	=> true}%>
+				<%= f.label :city, "In which city You lost/found the person? *",class:"postHeading"%>
+				<%= f.select :city, ["Ahmed Nager Chatha","Ali Khan Abad","Alipur Chatha", "Arifwala","Attock","Bhera","Bhalwal","Bahawalnagar","Bahawalpur","Bhakkar","Burewala","Chakwal","Chichawatni","Chiniot","Chunian","Daska","Dera Ghazi Khan","Faisalabad","Gojra","Gujranwala","Gujar Khan","Hafizabad","Jaranwala","Jhang","Jhelum","Kasur","Kamoke","Khanewal","Khanpur","Lahore","Islamabad","Lalamusa","Layyah","Chakwal","Mandi Bahauddin","Mian Channu","Mianwali","Multan","Murree","Muridke","Muzaffargarh","Narowal","Nankana Sahib","Okara","Rahim Yar Khan","Rawalpindi","Sadiqabad","Sahiwal","Samundri","Sargodha","Sheikhupura","Sialkot","Toba Tek Singh","Wazirabad"],{prompt: true}, {class:"form-control"} %>
+				<%= f.label :relation, "Your relation (In case of no relation select 'None') *", class:"postHeading" %>
+					<%= f.select :relation, ['Grand Father','Grand Mother','Father','Mother','Brother', 'Sister', 'Husband', 'Wife', 'Son', 'Daughter', 'Uncle','Aunt','None' ], {prompt: true}, {class:"form-control"} %>
+					<%= f.label :gender, "Specify the Gender of person You lost/found *", class:"postHeading" %>
+					<%= f.select :gender, ['Male','Female'], {prompt: true}, {class:"form-control"} %>
+			</div>
+			<div class="col-md-4">					
+				<%= f.label :age, "Do You know the age of person You lost/found? *", class:"postHeading",style:"margin-top: -2px;" %>
+				<%= f.select :age, ["1-5 Years","6-10 Years","11-15 Years","16-20 Years","21-25 Years","26-30 Years","31-35 Years","36-40 Years","41-45 Years","46-50 Years","50+ Years"],{prompt: true}, {class:"form-control"} %>		
+				<%= f.label :name, "Do You know the person's name?", class:"postHeading" %>
+				<%= f.text_field :name, class:"form-control", placeholder:"Enter name here"%>
+				<%= f.label :fathername, "Do You know the person's father name?", class:"postHeading" %>
+				<%= f.text_field :fathername, class:"form-control" , placeholder:"Enter Father's name here"%>
+				<%= f.label :clothes, "Select person's clothes. ", class:"postHeading" %>
+				<%= f.select :clothes, ['Pant Shirt','Trouser Shirt','Shalwar Qameez' ], {prompt: true}, {class:"form-control"} %>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<%= f.label :requestdate, "When did You lost/found the person? Specify date *", class:"postHeading" , style:"margin-top: 2.9em;"%>			
+	  		<%= f.date_select :requestdate, {prompt: true}, {class:"date required form-control"} %>
+			</div>
+			<div class="col-md-4" style="margin-top: -0.7em;">
+				<%= f.label :mentalstatus, "Is the He/She special person (Mentally stable or not). If You don't know this field can be skip.", class:"postHeading" %>
+				<%= f.select :mentalstatus, ["Normal Person", "Special Person"], {prompt: true}, {class:"form-control"}%>
+			</div>
+			<div class="col-md-4">
+				<%= f.label :clothescolor, "Mention person's clothes color.", class:"postHeading", style:"margin-top: 2.8em;"%>
+				<%= f.text_field :clothescolor, class:"form-control" , placeholder:"Enter clothes color here"%>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<%= f.label :description, "Any addtional description You want to enter about the person You lost/found? (If You don't want to mention this field can be skip)", class:"postHeading"%>
+				<%= f.text_area :description, class:"form-control" , placeholder:"Enter Description Here"%>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<center>
+			<%= f.submit class:"btn btn-success" , id:"posts", style:"display: none;" %>
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#verification" id="nexts">Next</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="scrollclose()">Close</button>
+		</center> 
+	</div>
+</div>
+</div>
+</div>
+
+<!-- ***************************** Verification Window ***********************************-->
+	<div class="modal fade" id="verification" >
+		<div class="modal-dialog">
+			<div class="modal-content"  style="background: #A1887F;">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<center>
+						<h1 class="modal-title postheader" style="color:white;">Provide Some of Your personal Detail</h1>
+					</center>
+				</div>				
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+								<label class="postHeading">Want to use Your Current Information? (This information will be Public)</label>
+								<%= text_field_tag :uname, us.name, {class: 'form-control',disabled:"true" }%>
+								<br>
+								<%= text_field_tag :uphone, us.phoneno, {class: 'form-control',disabled:"true", id:"userphone"}%>
+								<label style="color: #F0F0F0; font-size: 0.9em;"><input type="checkbox" value="" id="uphone" class="checkbox-primary"> Don't include</label>
+
+								<label class="postHeading" id="postphoneheading" style="display: none;">Enter Your contact number to reach You if someone claim this person (This contact number will be public)</label>
+								<%= f.text_field :contact, {class: 'form-control',:placeholder=>"Enter Number", id:"postphone",style:"display: none;",required:true}%>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<center>
+						<button type="button" class="btn btn-success" id="useru1">Save</button>
+				    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeV">Close</button>
+					</center>
+				</div>
+			</div>
+		</div>
+	</div>
+<% end %>

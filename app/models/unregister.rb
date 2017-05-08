@@ -1,0 +1,2 @@
+class Unregister < ApplicationRecord
+end

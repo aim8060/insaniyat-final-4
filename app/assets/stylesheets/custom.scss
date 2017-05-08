@@ -1,0 +1,261 @@
+/*****************************************************************************************/
+/*****************************************************************************************/
+/******************************* CSS for Project *****************************************/
+/*****************************************************************************************/
+/*****************************************************************************************/
+textarea{
+  resize: none;
+  max-height:50%;
+}
+.date.required.form-control{ 
+display: inline-block;
+width: 32.55%;
+}
+
+.fileinput-button {
+  width: 200px;
+  height: 25px;
+  margin-top: 6px;
+}
+input,select
+{
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.imgwrapper {
+   width: 100%;
+}
+.postHeading{
+    font-size: 13px;
+    color: #f0f0f0;
+    font-weight: bold;
+    margin-top: 28px;
+    margin-bottom: -8px;
+}
+.postheader{
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+.radioHeading{
+    font-size: 14px;
+    color: #f0f0f0;
+    font-weight: bold;
+}
+
+.personimage{
+    width:10px; height:10px;
+}
+
+@media only screen and (max-width: 992px) {
+    #head{
+		margin-top:12%;
+	}
+}
+
+body { 
+    background: url('banner.jpg') no-repeat center center fixed;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+} 
+
+/*************************** Nav bar Setting *********************************************/
+
+.navbar{
+  height:60px;
+  opacity:0.8;
+}
+#img_logo{
+	height:60px;
+	width:140px;
+	padding:10px;
+}
+
+.navbar-inverse {
+    background-color: #333;
+    border-color: #cd853e;
+}
+
+#navbar_font_handle{
+	font-size:1.2em;
+	margin-top:5px;
+}
+
+.navbar #navbar_font_handle li a{
+color:#d7ccc8;
+}
+.dropdown-menu{
+  background: #333;
+}
+
+/**********************************Log In/SignUp Window **********************************************/
+#logIn {
+top:20%;
+outline: none;
+}
+#signUp{
+top:20%;
+outline: none;
+}
+/********************************** Body Pannels **********************************************/
+
+#Home_images label{
+	color:#ffffff;
+}
+
+#Home_images .row{
+	padding:-10px;
+}
+
+#panel_home_images img{
+	width:100%;
+	height:30%;
+	max-width:100%;
+	max-height:100%;
+}
+
+#panel_home_images h4{
+	color:#ffffff;
+	text-decoration:none;
+}
+
+/********************************* Search Bar ************************************************/
+
+.text_center{
+	text-align:center;
+}
+
+.icon-input-btn{
+    display: inline-block;
+    position: relative;
+    }
+.icon-input-btn input[type="submit"]{
+    padding-left: 2em;
+    }
+.icon-input-btn .glyphicon{
+    display: inline-block;
+    position: absolute;
+    left: 0.65em;
+    top: 30%;
+}
+
+
+/****************************** modal-fullscreen ***************************/
+.color-white{
+  color:#f0f0f0;
+}
+
+.modal-fullscreen {
+  background: rgba(109,76,65,0.9);
+}
+
+.modal-fullscreen .modal-content {
+  background: transparent;
+  border: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.modal-backdrop.modal-backdrop-fullscreen {
+  background: #ffffff;
+}
+.modal-backdrop.modal-backdrop-fullscreen.in {
+  opacity: .97;
+  filter: alpha(opacity=97);
+}
+
+/* .modal-fullscreen size: we use Bootstrap media query breakpoints */
+
+.modal-fullscreen .modal-dialog {
+  margin: 0;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .modal-fullscreen .modal-dialog {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .modal-fullscreen .modal-dialog {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .modal-fullscreen .modal-dialog {
+     width: 1170px;
+  }
+}
+
+/*********************************** Tabs **********************************/
+
+
+/****************************** Show Post Detail ***************************/
+.btnlabel{
+  width: 100%;
+  font-size: 1em;
+  min-height: 33px;
+  max-height: 33px;
+}
+.btntextarea{
+  width: 100%;
+  font-size: 1em;
+  min-height: 33px;
+}
+
+
+
+
+
+
+/****************************** Media queries ***************************/
+/****** For body and side bar *******/
+@media screen and (max-width: 1800px) and (min-width: 1180px) {
+  .search{
+    position:fixed !important;
+  }
+}
+@media screen and (max-width: 1179px) and (min-width: 1060px) {
+  .search{
+    position:fixed !important;
+  }
+}
+@media screen and (max-width: 1059px) and (min-width: 992px) {
+  .search{
+    position:fixed !important;
+  }
+}
+@media screen and (max-width: 991px) and (min-width: 768px) { 
+  .search{
+    position:static !important;
+  }
+}
+@media screen and (max-width: 767px) and (min-width: 653px) {
+  .search{
+    position:static !important;
+  }
+}
+@media screen and (max-width: 652px) and (min-width: 521px) {
+  .search{
+    position:static !important;
+  } 
+}
+@media screen and (max-width: 520px) and (min-width: 401px) {
+  .search{
+    position:static !important;
+  }
+}
+@media screen and (max-width: 400px) and (min-width: 358px) {
+  .search{
+    position:static !important;
+  }
+}
+@media screen and (max-width: 357px) and (min-width: 280px) {
+  .search{
+    position:static !important;
+  }
+}

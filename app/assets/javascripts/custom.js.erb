@@ -1,0 +1,298 @@
+    /* *********************** Hiding and Visible Scrol on Full Screen Modal ********************************/
+function scrollopen()
+{
+    document.body.style.overflow = 'hidden';
+}
+
+function scrollclose(){
+    document.body.style.overflow = 'visible';
+}
+
+function nowpost()
+{
+    $('#verification').slideToggle();
+    $('#nextn').hide();
+    $('#post').show();
+}
+
+$(document).ready(function() 
+{
+    var u1
+    $(document).on("click", '#uphone', function() {
+        $('#postphone').val("");
+        $('#postphoneheading').slideToggle();
+        $('#postphone').slideToggle();
+    });
+
+    $(document).on("click", '#loginphoneno', function() {
+        $('#phonespan').hide();           
+    }); 
+    
+    $(document).on("click", '#loginpassword', function() {
+        $('#passwordspan').hide();           
+    }); 
+    $(document).on("click", '#loginclick', function() {
+        
+        var ph = $('#loginphoneno').val();
+        var pass = $('#loginpassword').val();
+        if(ph == ""){
+            var phonecode1 = "<span id='phonespan' style='color:red;'>Phone Number is required</span>";
+            $("#loginphoneno").after(phonecode1);
+            return false;            
+        }
+        else if(ph.length != 11){
+
+            var phonecode1 = "<span id='phonespan' style='color:red;'>Phone Number is not Valid</span>";
+            $("#loginphoneno").after(phonecode1);
+            return false;
+        }
+        if(pass == ""){
+            var passwordspan = "<span id='passwordspan' style='color:red;'>Password is required</span>";
+            $("#loginpassword").after(passwordspan);
+            return false;    
+        }
+        $.ajax({
+                 url: "/users/login", // Route to the Script Controller method
+                type: "post",
+            dataType: "json",
+                data: {phoneno: ph , password : pass}, // This goes to Controller in params hash, i.e. params[:file_name]
+            complete: function() {},
+             success: function(data, textStatus, xhr) {
+                        if(data == "-1")
+                        {
+                            var phonecode2= "<span id='phonespan' style='color:red;'>Phone # or password is wrong</span>";
+                            $("#loginphoneno").before(phonecode2);
+                            return false;
+                        }
+
+                      },
+               error: function() {
+                        alert("Ajax error!");
+                      }
+        });
+        return;          
+    });
+
+
+    $('#signupclick').click(function(){
+        var name = $('#signupname').val();
+        var phoneno = $('#signupphoneno').val();
+        var password = $('#signuppassword').val();;
+
+        if(name == ""){
+            var namecode = "<span id='namespan' style='color:red;'>Name is Required</span>"
+            $("#signupname").after(namecode);
+        }
+        if(phoneno == ""){
+            var phonecode = "<span id='phonespan' style='color:red;'>Phone # is Required</span>"
+            $("#signupphoneno").after(phonecode);
+        }
+        if(password == ""){
+            var passwordcode = "<span id='passwordspan' style='color:red;'>Password is Required</span>"
+            $("#signuppassword").after(passwordcode);
+        }
+    });
+
+    $(document).on("click", '#signupphoneno', function() {
+        $('#phonespan').hide();           
+    }); 
+    $(document).on("click", '#signupname', function() {
+        $('#namespan').hide();           
+    }); 
+    $(document).on("click", '#signuppassword', function() {
+        $('#passwordspan').hide();           
+    }); 
+    $(document).on("click", '#signupphoneno,#signuppassword,#signupname' , function() {
+        $('#signupclick').prop('disabled' , false);
+    }); 
+    $(document).on("blur", '#signupphoneno', function() {
+        var phonelength = $(this).val();
+        if(phonelength.length != 11){
+            var phonecode1 = "<span id='phonespan' style='color:red;'>Phone Number length is not Valid</span>";
+            $("#signupphoneno").after(phonecode1);
+            $('#signupclick').prop('disabled' , true);
+            return;
+        }
+        $.ajax({
+                 url: "/users/alreadyexist", // Route to the Script Controller method
+                type: "post",
+            dataType: "json",
+                data: {phone: $(this).val()}, // This goes to Controller in params hash, i.e. params[:file_name]
+            complete: function() {},
+             success: function(data, textStatus, xhr) {
+                        if(data == "1")
+                        {
+                            var phonecode1= "<span id='phonespan' style='color:red;'>Phone Number Already Register</span>"
+                            $("#signupphoneno").after(phonecode1);
+                            $('#signupclick').prop('disabled' , true);
+
+                        }
+                        else
+                        {
+                            $('.submit').prop('disabled' , false);        
+                        }
+                      },
+               error: function() {
+                        alert("Ajax error!");
+                      }
+        });           
+    }); 
+    
+
+    $('#closeV').click(function(){
+        $('#modal-fullscreen').css("overflow-y",'scroll');
+    });
+
+    $('#closep').click(function(){
+        $('#detail-window').css("overflow-y",'scroll');
+        scrollopen();
+    });
+
+    $('#useru').click(function(){
+        alert("Click")
+        var a = $("#UUphoneno").val();
+        if(a.length > 10)
+        {
+            var p = "";
+            $.ajax({
+                     url: "/users/createUser1", // Route to the Script Controller method
+                    type: "post",
+                dataType: "json",
+                    data: {phoneno: $("#UUphoneno").val() , name: $("#UUname").val(), password: p}, // This goes to Controller in params hash, i.e. params[:file_name]
+                complete: function() {},
+                 success: function(data, textStatus, xhr) {
+                          alert("User ID: " + data.id);
+                            if(data != -1)
+                            {
+                                u1 = data;
+                                nowpost();
+                            }
+                          },
+                   error: function() {
+                            alert("Ajax error!");
+                          }
+            });
+        }
+        else
+        {
+            alert("Incorrect Mobile Number");
+        }
+    });
+
+
+
+
+     $('#post').click(function(){
+        alert(u1.id);
+        alert("Post");
+        var Uimg = $('#UPpostimg').attr('src');
+        var Ustatus;
+        if($("#UPstatusl").is(":checked"))
+          Ustatus = $("#UPstatusl").val();
+        else if($("#UPstatusf").is(":checked"))
+          Ustatus = $("#UPstatusf").val();
+
+        var Uplace = $("#UPplace").val();
+        var Ucity = $("#UPcity").val();
+        var Urelation = $("#UPrelation").val();
+        var Ugender = $("#UPgender").val();
+        var Uage = $("#UPage").val();
+        var Uname = $("#UPname").val();
+        var Ufathername = $("#UPfathername").val();
+        var Uclothes = $("#UPclothes").val();
+        var Uyear = $("select[name='requestdate[(1i)]']").val();
+        var Umonth = $("select[name='requestdate[(2i)]']").val();
+        var Uday = $("select[name='requestdate[(3i)]']").val();
+        var Udate = Uyear+"-"+Umonth+"-"+Uday;
+        var Umentalstatus = $("#UPmentalstatus").val();
+        var Uclothescolor = $("#UPclothescolor").val();
+        var Udesc = $("#UPdescription").val();
+        
+        alert(Ustatus+" "+Uplace+" "+Ucity+" "+Urelation+" "+Ugender+" "+Uage+" "+Uname+" "+Ufathername+" "+Uclothes+" "+Udate+" "+Umentalstatus+" "+Uclothescolor+" "+Udesc+" "+u1.id);
+
+        $.ajax({
+                 url: "/posts/makepostnot", // Route to the Script Controller method
+                type: "post",
+            dataType: "json",
+                data: {id: u1.id,status: Ustatus,img: Uimg,place: Uplace,city: Ucity,relation: Urelation,gender: Ugender,age: Uage,name:Uname,fathername:Ufathername,clothes: Uclothes, date:Udate,mentalstatus:Umentalstatus, clothescolor:Uclothescolor, desc: Udesc, contact: $("#UUphoneno").val()},
+            complete: function() {},
+             success: function(data, textStatus, xhr) {
+                        alert(data);
+                        if(data != -1)
+                        {
+                            alert(data.status)
+                        }
+                      },
+               error: function() {
+                        alert("Ajax error!");
+                      }
+        });
+
+
+    });
+
+
+
+       
+        $('#nexts').click(function(){
+            var u = $('#userphone').val();
+            alert(u)
+            $('#postphone').val(u);
+        });
+
+        $('#useru1').click(function(){
+            $('#verification').slideToggle();
+            $('#nexts').hide();
+            $('#posts').show();
+        });
+
+    $(".dropdown").hover(
+        function() {
+          $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
+          $(this).toggleClass('open');
+          $('b', this).toggleClass("caret caret-up");},
+        function() {
+          $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
+          $(this).toggleClass('open');
+          $('b', this).toggleClass("caret caret-up");}
+      );
+
+    /* *********************** Loading data in Deatil window of Post ********************************/
+    $(document).on("click", '#detailpost', function() {
+            var sr = $(this).attr('data-image');
+            $('#showimage').attr( "src",sr);
+            $('#showstatus').text($(this).attr('data-status')).css('font-weight' , 'bold');
+            $('#showdate').text($(this).attr('data-date')).css('font-weight' , 'bold');
+            $('#showplace').text($(this).attr('data-place')).css('font-weight' , 'bold');
+            $('#showcity').text($(this).attr('data-city')).css('font-weight' , 'bold');            
+            $('#showgender').text($(this).attr('data-gender')).css('font-weight' , 'bold');
+            $('#showage').text($(this).attr('data-age')).css('font-weight' , 'bold');
+            $('#showmentalstatus').text($(this).attr('data-mentalstatus')).css('font-weight' , 'bold');
+            $('#showname').text($(this).attr('data-name')).css('font-weight' , 'bold');
+            $('#showfathername').text($(this).attr('data-fathername')).css('font-weight' , 'bold');
+            $('#showclothes').text($(this).attr('data-clothes')).css('font-weight' , 'bold');
+            $('#showclothcolor').text($(this).attr('data-clothescolor')).css('font-weight' , 'bold');
+            $('#showdescription').text($(this).attr('data-description')).css('font-weight' , 'bold');         
+
+            $('#showusername').text($(this).attr('data-user-name')).css('font-weight' , 'bold');
+            $('#showrelation').text($(this).attr('data-relation')).css('font-weight' , 'bold');
+            $('#showcontact').text($(this).attr('data-contact')).css('font-weight' , 'bold');
+    });
+
+ 
+
+
+    /* *********************** Full Screen Modal *******************************8*/
+    $(".modal-fullscreen").on('show.bs.modal', function () {
+        setTimeout( function() {
+            $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
+        }, 0);
+    });
+    $(".modal-fullscreen").on('hidden.bs.modal', function () {
+        $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
+    });
+/****************************  Tabs ********************************8*/
+
+    
+
+});
