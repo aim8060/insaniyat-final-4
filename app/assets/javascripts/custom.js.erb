@@ -73,7 +73,9 @@ $(document).ready(function()
                           alert("Error Occur During Login!\nTry Again Later");
                         }
                         else{
-                          window.location.replace("https://insaniyat-final-4.herokuapp.com/");
+                          window.location.replace("http://localhost:3000/");
+                          //window.location.replace("https://insaniyat-final-4.herokuapp.com/");
+
                         }
                       },
                error: function() {
@@ -226,7 +228,8 @@ $(document).ready(function()
                         alert(data);
                         if(data != -1)
                         {
-                            window.location.replace("https://insaniyat-final-4.herokuapp.com/");
+                            //window.location.replace("https://insaniyat-final-4.herokuapp.com/");
+                            window.location.replace("http://localhost:3000/")
                         }
                       },
                error: function() {
@@ -283,14 +286,14 @@ $(document).ready(function()
             $('#showcontact').text($(this).attr('data-contact')).css('font-weight' , 'bold');
     });
 
-     $('#closeV').click(function(){
+    /* $('#closeV').click(function(){
         $('#modal-fullscreen').css("overflow-y",'scroll');
     });
 
     $('#closep').click(function(){
         $('#detail-window').css("overflow-y",'scroll');
         scrollopen();
-    });
+    });*/
 
 
     /* *********************** Full Screen Modal *******************************8*/

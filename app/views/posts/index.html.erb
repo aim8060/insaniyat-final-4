@@ -52,7 +52,7 @@ $(document).ready(function()
 							<div class="col-md-4" >
 								<button id="detailpost" data-id="<%= post.id%>" data-status="<%= post.status%>" data-date="<%= post.requestdate%>" data-place="<%= post.place%>" data-city="<%= post.city%>" data-relation="<%= post.relation%>" data-gender="<%= post.gender%>" data-mentalstatus="<%= post.mentalstatus%>" data-age="<%= post.age%>" data-name="<%= post.name%>" data-fathername="<%= post.fathername%>" data-clothes="<%= post.clothes%>" data-clothescolor="<%= post.clothescolor%>" data-description="<%= post.description%>" data-image="<%= post.image.url(:medium)%>" data-contact="<%= post.contact%>" data-user-name="<%=post.user.name%>" style="width: 90%; background-color: #A1887F;border: hidden;">
 									<figure style="width:100%;">
-										<a href="#" data-toggle="modal" data-target="#detail-window">
+										<a href="#" data-toggle="modal" data-target="#detail-window" onclick="scrollopen()">
 											<div class="imgwrapper">
 													<%= image_tag post.image.url(:thumb), class:"img-thumbnail" ,style:"height:200px;"%>
 												<center>
@@ -147,7 +147,7 @@ $(document).ready(function()
 				<div class="modal-footer">
 					<center>
 						<button class="btn btn-primary" data-toggle="modal" data-target="#detail-window1">Posted By</button>
-						<button class="btn btn-danger" data-dismiss="modal">Close</button>
+						<button class="btn btn-danger" data-dismiss="modal" onclick="scrollclose()">Close</button>
 					</center>
 				</div>
 			</div>
@@ -183,7 +183,7 @@ $(document).ready(function()
 				</div>
 				<!-- Submit Button (footer)-->
 				<div class="modal-footer">
-					<button class="btn btn-primary btn-block" data-dismiss="modal" id="closep">Close</button>
+					<button class="btn btn-primary btn-block" data-dismiss="modal" id="closep" onclick="scrollopen()">Close</button>
 				</div>
 			</div>
 		</div>

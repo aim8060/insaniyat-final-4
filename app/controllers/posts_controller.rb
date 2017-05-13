@@ -85,21 +85,21 @@ class PostsController < ApplicationController
   end
 
   def threemissing
-    @posts = Post.where(:status => 'lost').limit(3);
+    @posts = Post.where(:status => 'lost').order("created_at DESC").limit(3);
     respond_to do |format|
         format.json {render json: @posts}
     end
   end
 
   def threefound
-    @posts = Post.where(:status => 'found').limit(3);
+    @posts = Post.where(:status => 'found').order("created_at DESC").limit(3);
     respond_to do |format|
         format.json {render json: @posts}
     end
   end
 
   def getallmissing
-    @posts = Post.where(:status => 'lost');
+    @posts = Post.where(:status => 'lost').order("created_at DESC");
     respond_to do |format|
         format.html {redirect_to root_path(@post)}
         format.json {render json: @posts}
@@ -107,7 +107,7 @@ class PostsController < ApplicationController
   end
 
   def getallfound
-    @posts = Post.where(:status => 'found');
+    @posts = Post.where(:status => 'found').order("created_at DESC");
     respond_to do |format|
         format.html {redirect_to root_path(@posts)}
         format.json {render json: @posts}
