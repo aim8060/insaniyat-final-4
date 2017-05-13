@@ -114,11 +114,17 @@
 					<div class="row">
 						<div class="col-md-2"></div>
 						<div class="col-md-8">
-								<label class="postHeading">Provide Your name (If You don't want to mention this field can be skip)</label>
-								<input type="text_field" name="phoneno" class="form-control" id="UUname" placeholder="Enter Your Name" class="form-control">
-								<label class="postHeading">Enter Your contact number to reach You if someone claim this person (This contact number will be public)</label>
-								<%= f.text_field :contact, {class: 'form-control',:placeholder=>"Enter Number", id:"UUphoneno",required:true}%>
-								<span style="display: none; color: red; font-size: 12px;" id="incorrectphone">Incorrect Phone Number</span>
+							<label class="postHeading">Provide Your name (If You don't want to mention this field can be skip)</label>
+							<input type="text_field" name="phoneno" class="form-control" id="UUname" placeholder="Enter Your Name" class="form-control">
+							<label class="postHeading">Enter Your contact number to reach You if someone claim this person (This contact number will be public)</label>
+							<%= f.number_field :contact, {class: 'form-control',:placeholder=>"Enter Number", id:"UUphoneno",required:true}%>
+							<label style="color: #F0F0F0; font-size: 0.9em;"><input type="checkbox" value="" id="uuphone" class="checkbox-primary" checked> Use this number to contact me</label>
+							<div class="form-group" style="display: none;" id="incorrectphone">
+								<label class="label label-danger">Incorrect Phone Number</label>
+							</div>
+							<div class="form-group" style="display: none;" id="already">
+								<label class="label label-danger" style="font-size: 0.9em; padding: 7px;">This Phone Number is already register. Use this to Post</label>
+							</div>
 						</div>
 						<div class="col-md-2"></div>
 					</div>
@@ -126,7 +132,8 @@
 				<div class="modal-footer">
 					<center>
 						<button type="button" class="btn btn-success" id="useru">Save</button>
-					    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeV">Close</button>
+						<button type="button" class="btn btn-success" id="usernext" style="display: none;">Next</button>
+				    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeV">Close</button>
 					</center>
 				</div>
 			</div>

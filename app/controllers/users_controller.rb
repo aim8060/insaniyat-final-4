@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     rescue 
   	 respond_to do |format|
         format.html {redirect_to about_posts_path}
-        format.json {render json: "-1"}
+        format.json {render json: "-2"}
       end
     end
   end
@@ -83,7 +83,7 @@ class UsersController < ApplicationController
     begin      
       if @user
         respond_to do |format|
-          format.json {render json: "1"}
+          format.json {render json: @user}
         end
       else
         respond_to do |format|
@@ -96,7 +96,6 @@ class UsersController < ApplicationController
         end
     end
   end
-
 
 
   private

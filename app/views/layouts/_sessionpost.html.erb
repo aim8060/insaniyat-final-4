@@ -119,7 +119,7 @@
 								<%= text_field_tag :uname, us.name, {class: 'form-control',disabled:"true" }%>
 								<br>
 								<%= text_field_tag :uphone, us.phoneno, {class: 'form-control',disabled:"true", id:"userphone"}%>
-								<label style="color: #F0F0F0; font-size: 0.9em;"><input type="checkbox" value="" id="uphone" class="checkbox-primary"> Don't include</label>
+								<label style="color: #F0F0F0; font-size: 0.9em;"><input type="checkbox" value="" id="uphone" class="checkbox-primary" checked> Use this number to contact me</label>
 
 								<label class="postHeading" id="postphoneheading" style="display: none;">Enter Your contact number to reach You if someone claim this person (This contact number will be public)</label>
 								<%= f.text_field :contact, {class: 'form-control',:placeholder=>"Enter Number", id:"postphone",style:"display: none;",required:true}%>

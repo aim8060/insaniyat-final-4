@@ -76,21 +76,31 @@
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h3 class="modal-title">Log In</h3>
 							</div>
-							<%= form_for :user do |l|%>					
 							<!-- Body (form) -->
 							<div class="modal-body">
-									<div class="form-group">
-										<%= l.number_field :phoneno, {class:"form-control",placeholder:"Enter Phone Number", id:"loginphoneno",:required => true}%>
-									</div>
-									<div class="form-group">
-										<%= l.password_field :password, {class:"form-control", placeholder:"Password", id: 'loginpassword',:required => true}%>
-									</div>
+								<div class="form-group">
+									<%= number_field_tag :phoneno, nil, {class:"form-control",placeholder:"Enter Phone Number", id:"loginphoneno",required:true}%>
+								</div>
+								<div class="form-group" style="display: none;" id="phonein">
+									<label class="label label-danger">Incorrect Phone Number</label>
+								</div>
+								<div class="form-group" style="display: none;" id="phoner">
+									<label class="label label-danger">Phone Number Required</label>
+								</div>
+								<div class="form-group">
+									<%= password_field_tag :password, nil, {class:"form-control", placeholder:"Password", id: 'loginpassword',:required => true}%>
+								</div>
+								<div class="form-group" style="display: none;" id="passr">
+									<label class="label label-danger">Password Required</label>
+								</div>
+								<div class="form-group" style="display: none;" id="invalidlogin">
+									<label class="label label-danger" style="padding: 6px; font-size: 0.9em;">Login Failed!!! Incorrect Username or Password</label>
+								</div>
 							</div>
 							<!-- Submit Button (footer)-->
 							<div class="modal-footer">
-								<%= l.submit 'Login' ,class:'btn btn-primary', id: 'loginclick'%>
+								<%= submit_tag 'Login' ,class:'btn btn-primary', id: 'loginclick'%>
 							</div>
-							<% end%>
 						</div>
 					</div>
 				</div>
@@ -113,8 +123,17 @@
 								<div class="form-group">
 									<%= u.number_field :phoneno, {class:"form-control", placeholder:"Phone Number",id:'signupphoneno',:required => true}%>
 								</div>
+								<div class="form-group" style="display: none;" id="signphonein">
+									<label class="label label-danger">Incorrect Phone Number</label>
+								</div>
+								<div class="form-group" style="display: none;" id="signphone">
+									<label class="label label-danger">Phone Number is already register</label>
+								</div>
 								<div class="form-group">
 									<%= u.password_field :password, {class:"form-control", placeholder:"Password",id:'signuppassword',required:true}%>
+								</div>
+								<div class="form-group" style="display: none;" id="signpass">
+									<label class="label label-danger">Password is Required</label>
 								</div>
 							</div>
 							<!-- Submit Button (footer)-->
