@@ -22,12 +22,19 @@ Rails.application.routes.draw do
 			post 'alreadyexist'
 			post 'checklogin'
 			post 'createUser1'
+			post 'getposter'
 		end
 	end
 
 	resources :unregister do
 		collection do
 			post 'createUser'
+		end
+	end
+
+	resources :admin do
+		collection do
+			get 'allusers'
 		end
 	end
 

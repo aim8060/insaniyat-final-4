@@ -97,6 +97,32 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user = User.find(params[:id])
+    if @user
+      @user.destroy
+    end
+    redirect_to allusers_admin_index_path
+  end
+
+  def getposter
+    @user = User.find_by(phoneno: params['phone'])
+    begin      
+      if @user
+        respond_to do |format|
+          format.json {render json: @user}
+        end
+      else
+        respond_to do |format|
+          format.json {render json: "-1"}
+        end
+      end
+    rescue
+      respond_to do |format|
+          format.json {render json: "-1"}
+        end
+    end
+  end 
 
   private
   	def permit_user

@@ -72,7 +72,7 @@
 		<div class="row">
 			<div class="col-md-4">
 				<%= f.label :requestdate, "When did You lost/found the person? Specify date *", class:"postHeading" , style:"margin-top: 2.9em;"%>			
-	  		<%= f.date_select :requestdate, {prompt: true}, {class:"date required form-control"} %>
+	  			<%= f.date_select :requestdate, {prompt: true}, {class:"date required form-control"} %>
 			</div>
 			<div class="col-md-4" style="margin-top: -0.7em;">
 				<%= f.label :mentalstatus, "Is the He/She special person (Mentally stable or not). If You don't know this field can be skip.", class:"postHeading" %>
@@ -129,7 +129,7 @@
 				</div>
 				<div class="modal-footer">
 					<center>
-						<button type="button" class="btn btn-success" id="useru1">Save</button>
+						<button type="button" class="btn btn-success" data-dismiss="modal" id="useru1">Save</button>
 				    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeV">Close</button>
 					</center>
 				</div>

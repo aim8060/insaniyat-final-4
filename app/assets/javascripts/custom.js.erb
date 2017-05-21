@@ -79,7 +79,7 @@ $(document).ready(function()
                         }
                       },
                error: function() {
-                        alert("Ajax error!");
+                        alert("Unrecognized Error!\nTry Again Later");
                       }
         });
 
@@ -115,7 +115,7 @@ $(document).ready(function()
                         }
                       },
                error: function() {
-                        alert("Ajax error!");
+                        alert("Unrecognized Error!\nTry Again Later");
                       }
         });           
     }); 
@@ -125,12 +125,12 @@ $(document).ready(function()
  
     /************************ Start Creating User for Post Code ***************************/
     $('#useru').click(function(){
-        alert("Click")
         var a = $("#UUphoneno").val();
         if(a.length > 10)
         {
             $("#incorrectphone").hide();
             var p = "";
+            $("#phoneloading").slideToggle();
             $.ajax({
                      url: "/users/createUser1", // Route to the Script Controller method
                     type: "post",
@@ -138,19 +138,21 @@ $(document).ready(function()
                     data: {phoneno: $("#UUphoneno").val() , name: $("#UUname").val(), password: p}, // This goes to Controller in params hash, i.e. params[:file_name]
                 complete: function() {},
                  success: function(data, textStatus, xhr) {
-                          alert("User ID: " + data);
                             if(data != -1)
                             {
                                 u1 = data;
+                                $("#phoneloading").slideToggle();
                                 nowpost();
                             }
                             else if (data == -1)
                             {
-                                nowpost1();
+                              $("#phoneloading").slideToggle();
+                              nowpost1();
                             }
                           },
                    error: function() {
-                            alert("Ajax error!");
+                            $("#phoneloading").slideToggle();
+                            alert("Unrecognized Error!\nTry Again Later");
                           }
             });
         }
@@ -163,7 +165,6 @@ $(document).ready(function()
 
     /************************ Start Loading User for Post Code ***************************/
     $("#usernext").click(function(){
-      alert("Next");
         $.ajax({
                  url: "/users/alreadyexist", // Route to the Script Controller method
                 type: "post",
@@ -184,7 +185,7 @@ $(document).ready(function()
                         }
                       },
                error: function() {
-                        alert("Ajax error!");
+                        alert("Unrecognized Error!\nTry Again Later");
                       }
         });
     });
@@ -217,7 +218,10 @@ $(document).ready(function()
         var Udesc = $("#UPdescription").val();
         var c = ""; 
         if($("#uuphone").is(":checked"))
-            c  = $("#UUphoneno").val();        
+            c  = $("#UUphoneno").val();
+
+        $("#postloading").slideToggle();
+        $("#post").prop('disabled' , true);
         $.ajax({
                  url: "/posts/makepostnot", // Route to the Script Controller method
                 type: "post",
@@ -225,15 +229,18 @@ $(document).ready(function()
                 data: {id: u1.id,status: Ustatus,img: Uimg,place: Uplace,city: Ucity,relation: Urelation,gender: Ugender,age: Uage,name:Uname,fathername:Ufathername,clothes: Uclothes, date:Udate,mentalstatus:Umentalstatus, clothescolor:Uclothescolor, desc: Udesc, contact: c},
             complete: function() {},
              success: function(data, textStatus, xhr) {
-                        alert(data);
+                        
                         if(data != -1)
                         {
-                            //window.location.replace("https://insaniyat-final-4.herokuapp.com/");
-                            window.location.replace("http://localhost:3000/")
+                          $("#postloading").slideToggle();
+                          //window.location.replace("https://insaniyat-final-4.herokuapp.com/");
+                          window.location.replace("http://localhost:3000/")
                         }
                       },
                error: function() {
-                        alert("Ajax error!");
+                        $("#postloading").slideToggle();
+                        $("#post").prop('disabled' , true);
+                        alert("Unrecognized Error!\nTry Again Later");
                       }
         });
     });
@@ -243,7 +250,6 @@ $(document).ready(function()
        
         $('#nexts').click(function(){
             var u = $('#userphone').val();
-            alert(u)
             $('#postphone').val(u);
         });
 
@@ -252,7 +258,6 @@ $(document).ready(function()
             $('#nexts').hide();
             $('#posts').show();
         });
-
     $(".dropdown").hover(
         function() {
           $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
@@ -285,16 +290,6 @@ $(document).ready(function()
             $('#showrelation').text($(this).attr('data-relation')).css('font-weight' , 'bold');
             $('#showcontact').text($(this).attr('data-contact')).css('font-weight' , 'bold');
     });
-
-    /* $('#closeV').click(function(){
-        $('#modal-fullscreen').css("overflow-y",'scroll');
-    });
-
-    $('#closep').click(function(){
-        $('#detail-window').css("overflow-y",'scroll');
-        scrollopen();
-    });*/
-
 
     /* *********************** Full Screen Modal *******************************8*/
     $(".modal-fullscreen").on('show.bs.modal', function () {

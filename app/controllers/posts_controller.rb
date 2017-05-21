@@ -29,8 +29,6 @@ class PostsController < ApplicationController
   end
 
   def makepost
-    #@post = Post.new(permit_post)
-    #debugger
     begin
       @user = User.find(params[:id])
       @post = @user.posts.build(permit_post)
@@ -114,7 +112,13 @@ class PostsController < ApplicationController
     end
   end
 
-
+  def destroy
+    @post = Post.find(params[:id])
+    if @post
+      @post.destroy
+    end
+    redirect_to admin_index_path
+  end
 
 	private
 		def permit_post

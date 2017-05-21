@@ -33,6 +33,16 @@
 
 <%= form_for :post,{:controller => :posts , :action => :new, html: {multipart: true} } do |f| %>
 	<div class="modal-body">
+		<div class="row" style="margin-top:-1em;z-index:2;position:absolute;width:100%;height:100%;background:rgba(1,1,1,0.4);display: none;" id="postloading">
+			<div class="col-md-4"></div>
+			<div class="col-md-4" style="margin-top: 15em;">
+				<center>
+					<img src="assets/loading_1.gif" style="width: 6em;height: 6em;"/>
+					<h4 style="font-size: 1em; color:#F0F0F0; font-weight: bold;">Saving Your Post</h4>				
+				</center>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
 		<div class="row" style="margin-top: -0.5em;">
 			<div class="col-md-4">
 				<center>
@@ -111,14 +121,24 @@
 					</center>
 				</div>				
 				<div class="modal-body">
+					<div class="row" style="margin-top:-1em;z-index:2;position:absolute;width:100%;height:100%;background:rgba(1,1,1,0.4); display: none;" id="phoneloading">
+						<div class="col-md-4"></div>
+						<div class="col-md-4" style="margin-top:6em;">
+							<center>
+								<img src="assets/loading_1.gif" style="width: 3em;height: 3em;" />
+								<h4 style="font-size: 1em; color:#F0F0F0; font-weight: bold;">Verifying You Phone Number</h4>
+							</center>
+						</div>
+						<div class="col-md-4"></div>
+					</div>
 					<div class="row">
 						<div class="col-md-2"></div>
 						<div class="col-md-8">
 							<label class="postHeading">Provide Your name (If You don't want to mention this field can be skip)</label>
 							<input type="text_field" name="phoneno" class="form-control" id="UUname" placeholder="Enter Your Name" class="form-control">
-							<label class="postHeading">Enter Your contact number to reach You if someone claim this person (This contact number will be public)</label>
+							<label class="postHeading">Provide Your Contact Number for Verification</label>
 							<%= f.number_field :contact, {class: 'form-control',:placeholder=>"Enter Number", id:"UUphoneno",required:true}%>
-							<label style="color: #F0F0F0; font-size: 0.9em;"><input type="checkbox" value="" id="uuphone" class="checkbox-primary" checked> Use this number to contact me</label>
+							<label style="color: #F0F0F0; font-size: 0.9em;"><input type="checkbox" value="" id="uuphone" class="checkbox-primary" checked> Use this number to contact me if someone claim this person</label>
 							<div class="form-group" style="display: none;" id="incorrectphone">
 								<label class="label label-danger">Incorrect Phone Number</label>
 							</div>
@@ -132,7 +152,7 @@
 				<div class="modal-footer">
 					<center>
 						<button type="button" class="btn btn-success" id="useru">Save</button>
-						<button type="button" class="btn btn-success" id="usernext" style="display: none;">Next</button>
+						<button type="button" class="btn btn-success" data-dismiss="modal" id="usernext" style="display: none;">Next</button>
 				    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeV">Close</button>
 					</center>
 				</div>

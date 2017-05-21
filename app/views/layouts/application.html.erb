@@ -9,6 +9,10 @@
     <%= javascript_include_tag 'application', "rails.validations","rails.validations.simple_form",'data-turbolinks-track': 'reload' %>
   </head>
   <body>
+
+<% if controller_name == "admin"%>
+	<%= yield %>
+<% else %>
 <!-- ************************************ NavBar ************************************ -->
 		<div id="navbar">
 			<div class="navbar navbar-inverse navbar-fixed-top">
@@ -250,5 +254,6 @@
 		</div>
 <!-- ************************************ End of Search Side Bar *********************************** -->
     </div>
+    <%end%>
   </body>
 </html>
