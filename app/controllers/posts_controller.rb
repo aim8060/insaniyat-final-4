@@ -5,7 +5,6 @@ class PostsController < ApplicationController
   end
 
   def makepostnot
-    #debugger
     begin
       @user = User.find(params[:id])
       @post = @user.posts.build(status: params[:status],image: params[:img],place: params[:place],city: params[:city],relation: params[:relation],gender: params[:gender],age: params[:age],name:params[:name],fathername:params[:fathername],clothes: params[:clothes],requestdate:params[:date],mentalstatus:params[:mentalstatus], clothescolor:params[:clothescolor],description: params[:desc],contact: params[:contact])

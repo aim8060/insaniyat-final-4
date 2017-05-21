@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
-	attr_accessor :content_type, :original_filename, :image_data
- 	before_save :decode_base64_image
+	#attr_accessor :content_type, :original_filename, :image_data
+ 	#before_save :decode_base64_image
 
 	belongs_to :user
 

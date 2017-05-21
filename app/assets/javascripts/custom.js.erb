@@ -221,7 +221,7 @@ $(document).ready(function()
             c  = $("#UUphoneno").val();
 
         $("#postloading").slideToggle();
-        $("#post").prop('disabled' , true);
+        //$("#post").prop('disabled' , true);
         $.ajax({
                  url: "/posts/makepostnot", // Route to the Script Controller method
                 type: "post",
@@ -239,7 +239,7 @@ $(document).ready(function()
                       },
                error: function() {
                         $("#postloading").slideToggle();
-                        $("#post").prop('disabled' , true);
+                        $("#post").prop('disabled' , false);
                         alert("Unrecognized Error!\nTry Again Later");
                       }
         });
