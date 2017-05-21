@@ -1,0 +1,49 @@
+<div class="container">
+	<div class="row" style="margin-top: 2em; margin-bottom: 2em;">
+		<div class="col-md-12">
+			<div class="panel panel-default" style="background:#A1887F;">
+				<div class="panel-heading"><h4>All Users</h4>
+					<ul class="nav nav-pills">
+						<li class="active"><%=link_to 'Missing', admin_index_path(:id => 'getmiss') , id: 'getmiss'%></li>
+						<li class="active"><%=link_to 'Found', admin_index_path(:id => 'getfound'), id: 'getfound'%></li>
+						<li class="active"><%=link_to 'Users', allusers_admin_index_path %></li>
+					</ul>
+				</div>
+				<div class="panel-body"style="overflow-y: scroll hidden;">
+					<div class="row" style="margin-top: 0.5em; margin-bottom: 2em;">
+						<div class="col-md-3">
+							<label class="label label-primary" style="font-size: 1.2em; padding: 0.5em;">Name</label>
+						</div>
+						<div class="col-md-3">
+							<label class="label label-primary" style="font-size:1.2em;padding:0.5em;">Contact Number</label>
+						</div>
+						<div class="col-md-3">
+							<label class="label label-primary" style="font-size: 1.2em; padding: 0.5em;">Number of Posts</label>
+						</div>
+						<div class="col-md-3"></div>
+					</div>
+					<% @users.each do |user| %>
+						<div class="row" style="margin-top: 0.5em; margin-bottom: 0.5em;">
+							<div class="col-md-3">
+								<label class="label label-default" style="font-size: 1em;"><%= user.name%></label>
+							</div>
+							<div class="col-md-3">
+								<label class="label label-default"  style="font-size: 1em;"> <%= user.phoneno%></label>
+							</div>
+							<div class="col-md-3">
+								<label class="label label-default"  style="font-size: 1em;"><%= user.posts.count%></label>
+							</div>
+							<div class="col-md-3">
+								<%= link_to "Delete",user_path(user.id), method: :delete, data: {confirm: "Are You sure to delete this User and all it's Posts?"}, class:"btn btn-danger btn-block"%>
+							</div>
+						</div>
+					<%end%>
+				</div>
+				<center>
+					<%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+				</center>
+			</div>
+		</div>
+	</div>
+</div>
+
