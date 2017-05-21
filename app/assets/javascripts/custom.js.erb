@@ -73,8 +73,8 @@ $(document).ready(function()
                           alert("Error Occur During Login!\nTry Again Later");
                         }
                         else{
-                          //window.location.replace("http://localhost:3000/");
-                          window.location.replace("https://insaniyat-final-4.herokuapp.com/");
+                          window.location.replace("http://localhost:3000/");
+                          //window.location.replace("https://insaniyat-final-4.herokuapp.com/");
 
                         }
                       },
@@ -88,7 +88,13 @@ $(document).ready(function()
 
     /************************ Start Sign Up Code ***************************/
     $(document).on("keyup", '#signupphoneno', function() {
-        var phonelength = $(this).val();
+           forSignUp();
+    });
+    $(document).on("blur", '#signupphoneno', function() {
+           forSignUp();
+    }); 
+    function forSignUp(){
+        var phonelength = $('#signupphoneno').val();
         if(phonelength.length != 11){
             $("#signphonein").show();
             $('#signupclick').prop('disabled' , true);
@@ -99,7 +105,7 @@ $(document).ready(function()
                  url: "/users/alreadyexist", // Route to the Script Controller method
                 type: "post",
             dataType: "json",
-                data: {phone: $(this).val()}, // This goes to Controller in params hash, i.e. params[:file_name]
+                data: {phone: $('#signupphoneno').val()}, // This goes to Controller in params hash, i.e. params[:file_name]
             complete: function() {},
              success: function(data, textStatus, xhr) {
                         if(data == "-1")
@@ -117,9 +123,8 @@ $(document).ready(function()
                error: function() {
                         alert("Unrecognized Error!\nTry Again Later");
                       }
-        });           
-    }); 
-
+        });
+    }
     /************************ End Sign Up Code ***************************/
 
  
@@ -233,8 +238,8 @@ $(document).ready(function()
                         if(data != -1)
                         {
                           $("#postloading").slideToggle();
-                          window.location.replace("https://insaniyat-final-4.herokuapp.com/");
-                          //window.location.replace("http://localhost:3000/")
+                          //window.location.replace("https://insaniyat-final-4.herokuapp.com/");
+                          window.location.replace("http://localhost:3000/")
                         }
                       },
                error: function() {
