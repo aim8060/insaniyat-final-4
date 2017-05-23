@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 			post 'checklogin'
 			post 'createUser1'
 			post 'getposter'
+			post 'getmypost'
 		end
 	end
 

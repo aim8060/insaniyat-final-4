@@ -106,11 +106,11 @@ class UsersController < ApplicationController
   end
 
   def getposter
-    @user = User.find_by(phoneno: params['phone'])
+    @user = User.find_by(id: params['id'])
     begin      
       if @user
         respond_to do |format|
-          format.json {render json: @user}
+          format.json {render json: @user.as_json(except: [:id, :created_at, :password, :updated_at, :phoneno])}
         end
       else
         respond_to do |format|
@@ -123,6 +123,26 @@ class UsersController < ApplicationController
         end
     end
   end 
+
+  def getmypost
+    @user = User.find_by(id: params['id'])
+    begin      
+      if @user
+        respond_to do |format|
+          format.json {render json: @user.as_json(include: :posts, except: [:id, :name, :created_at, :password, :updated_at, :phoneno])}
+        end
+      else
+        respond_to do |format|
+          format.json {render json: "-1"}
+        end
+      end
+    rescue
+      respond_to do |format|
+          format.json {render json: "-1"}
+        end
+    end
+  end
+
 
   private
   	def permit_user
