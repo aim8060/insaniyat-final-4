@@ -77,7 +77,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   def alreadyexist
     @user = User.find_by(phoneno: params['phone'])
     begin      

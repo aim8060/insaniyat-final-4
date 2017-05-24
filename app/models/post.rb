@@ -6,8 +6,8 @@ class Post < ApplicationRecord
 
   do_not_validate_attachment_file_type :image
 
-	has_attached_file :image, styles: { large: "280x280>",medium: "140x140>", thumb: "90x90>" }, default_url: "/images/:style/missing.png"
-  	validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
+	has_attached_file :image, styles: { large: "280x280>",medium: "140x140>", thumb: "90x90>" }, default_url: "Images/Unknown_Person.png"
+  #validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 
 	#protected
     #def decode_base64_image
