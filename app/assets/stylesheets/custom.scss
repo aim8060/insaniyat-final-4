@@ -64,19 +64,10 @@ body {
 
 /*************************** Nav bar Setting *********************************************/
 
-.navbar{
-  height:60px;
-  opacity:0.8;
-}
 #img_logo{
 	height:60px;
 	width:140px;
 	padding:10px;
-}
-
-.navbar-inverse {
-    background-color: #333;
-    border-color: #cd853e;
 }
 
 #navbar_font_handle{
@@ -88,7 +79,7 @@ body {
 color:#d7ccc8;
 }
 .dropdown-menu{
-  background: #333;
+  background-color: rgba(0,0,0, 0.8);
 }
 
 /**********************************Log In/SignUp Window **********************************************/
