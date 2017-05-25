@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  phoneno: MyString
+  pin: MyString
+  status: MyString
+
+two:
+  phoneno: MyString
+  pin: MyString
+  status: MyString

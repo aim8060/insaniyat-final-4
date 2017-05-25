@@ -134,7 +134,19 @@
 								<div class="form-group" style="display: none;" id="signphone">
 									<label class="label label-danger">Phone Number is already register</label>
 								</div>
+
 								<div class="form-group">
+									<div id="verify-pin" style="display: none;">
+										<label class="label label-success" style="font-size: 1em;">Sending a Verification Code at Your Number</label>
+									  <div class="form-group">
+									    <%= number_field_tag :pin ,nil , {id: "pinfield",class:"form-control", placeholder:"Enter You Pin"} %>
+									  </div>
+									  <BUTTON class="btn btn-primary" id="verifynumber">Verify PIN</BUTTON>
+									</div>
+								</div>
+
+								<div class="form-group">
+
 									<%= u.password_field :password, {class:"form-control", placeholder:"Password",id:'signuppassword',required:true}%>
 								</div>
 								<div class="form-group" style="display: none;" id="signpass">
@@ -159,7 +171,7 @@
 		<div class="col-md-8">
     		<%= yield %>
     	</div>
- <!-- ********************************* Start of Search Side Bar ******************************* -->
+ <!-- ********************************* Start of Search Side Bar ******************************* 
 		<div class="col-sm-4" id="searchDiv">
 			<div class="panel panel-default search" style="height:83%;position: fixed; overflow-y: scroll;">
 				<div class="panel-heading">Search Persons</div>
@@ -246,6 +258,147 @@
 						<div class="col-sm-12">
 							<span class="icon-input-btn btn-success"><span class="glyphicon glyphicon-search"></span> 
 							<%= f.submit :post , class:"btn btn-success"%></span>
+						</div>
+						</center>
+					</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+<! ************************************ End of Search Side Bar *********************************** -->
+
+<!-- ********************************* Start of Search Side Bar ******************************* -->
+ <!-- ************************************* Search Side Bar ************************************** -->
+<script>
+$(document).ready(function() 
+{
+	$("#fileUpload").on('change', function() 
+	{
+		//Get count of selected files
+		var countFiles = $(this)[0].files.length;
+		var imgPath = $(this)[0].value;
+		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+		var image_holder = $("#image-holder");
+		image_holder.empty();
+		if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+			if (typeof(FileReader) != "undefined") {
+				//loop for each file selected for uploaded.
+				for (var i = 0; i < countFiles; i++) 
+				{
+					var reader = new FileReader();
+					reader.onload = function(e) {
+					$("#posting").attr('src' , e.target.result);
+					$("#posting").css('width' , '25em');
+				}
+				//image_holder.show();
+				//reader.readAsDataURL($(this)[0].files[i]);
+				}
+			} else {
+				alert("This browser does not support FileReader.");
+			}
+		}else {
+			alert("Pls select only images");
+		}
+	});
+});
+</script>
+<!-- *************************************** Search Side Bar *****************************************-->
+		<div class="col-sm-4" id="searchDiv">
+			<div class="panel panel-default search" style="height:83%;position: fixed; overflow-y: scroll;">
+				<div class="panel-heading">Search Persons</div>
+				<div class="panel-body">
+					<%= form_for :post, :url => search_posts_path(@post), method: :get , :html => {:id => "searchform"} do |f|%>
+
+					<div class="form-group">
+						<p>To optimize your search rresults,provide picture of </p>
+						<p>person with a clear face to do search by picture.</p>
+						<center>
+							<div class="row">
+								<div class="col-md-12">
+									<div id="image-holder">
+										<img src="/images/Unknown_Person.png" id="posting" class="img-thumbnail" style="width:18em;height:8em;" />
+									</div>
+								</div>		
+							</div>
+							<br>
+							<input id="fileUpload" type="file" class="btn-success"/> 
+						</center>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="dateerror"></div>
+							<label>Enter Date and Time You want to search from:</label>
+							<%= f.date_select :requestdate, {prompt: true}, {class:"datesearch required form-control"} %>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:status, "Status:")%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= select_tag "status", options_for_select([ "I Lost" , "I Found" ]) , {class:"form-control status" , prompt:"Status"}%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:name, "Name:")%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= f.text_field  :name,class:"form-control Name" , placeholder:'Name (Optional)'%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:fathername, "Father Name:") %>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= f.text_field :fathername, class:"form-control FatherName" , placeholder:"Father Name (Optional)"%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:age, "Age:")%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= select_tag "age", options_for_select([ "1-5", "6-10", "11-15" , "16-20", "21-25", "26-30", "31-35", "36-40", "41-45","46-50", "Greater than 50 years" ], "Optional") , {class:"form-control age" , prompt:"Optional"}%> 		
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:gender , "Gender")%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= select_tag "gender", options_for_select([ "Male" , "Female" ]) , {class:"form-control gender" , prompt:"Optional"}%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= label_tag(:mentalstatus , "Person Condition:")%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<%= select_tag "mentalstatus", options_for_select([ "Normal Person" , "Special Person" ]) , {class:"form-control mentalstatus" , prompt:"....."}%>
+						</div>
+					</div><br>
+					<div class="row">
+
+					<center>
+						<div class="error"></div>
+						<div class="col-sm-12">
+							<span class="icon-input-btn btn-success"><span class="glyphicon glyphicon-search"></span> 
+							<%= f.submit 'Search' ,class:"btn btn-success from-searchbtn" , :onclick => "checkdate();"%></span>
 						</div>
 						</center>
 					</div>

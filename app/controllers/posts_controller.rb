@@ -119,6 +119,20 @@ class PostsController < ApplicationController
     redirect_to admin_index_path
   end
 
+  def search
+    #@posts = Post.where('name = ? AND fathername = ?' , params[:post][:name] , params[:post][:fathername]).order("created_at DESC").paginate(page: params[:page], per_page: 9);
+    #debugger
+    #respond_to do |format|
+      #format.html 
+      #format.json {render json: @posts}
+    #end
+    @posts = Post.search(params).order("created_at DESC").paginate(page: params[:page], per_page: 21)
+    respond_to do |format|
+      format.html 
+      format.json {render json: @posts}
+    end
+  end
+
 	private
 		def permit_post
 			params.require(:post).permit(:status,:requestdate,:place,:city,:relation,:gender,:mentalstatus,:name,:fathername,:age,:clothes,:clothescolor,:description,:image,:contact,:user_id)

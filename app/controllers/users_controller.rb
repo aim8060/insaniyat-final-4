@@ -85,6 +85,14 @@ class UsersController < ApplicationController
           format.json {render json: @user}
         end
       else
+        pin = rand(0000..9999).to_s.rjust(4, "0")
+        @phonenumber = Phonenumber.create(:phoneno => params['phone'] , :pin => pin , :status => 'Not')
+        client = Twilio::REST::Client.new 'AC926080bd1069d439cde404f1a1080460', 'd3094509e7a1c9a663c71bbdd2ecf413'
+        client.account.messages.create(
+        :from => '+12569738430',
+        :to => '+923316813833',
+        :body => "Your Pin code is "+pin,
+        )
         respond_to do |format|
           format.json {render json: "-1"}
         end

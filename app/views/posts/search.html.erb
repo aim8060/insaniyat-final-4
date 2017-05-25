@@ -1,0 +1,158 @@
+<div class="panel panel-default" style="background:#A1887F;">
+	<div class="panel-heading"><h4>Search Results</h4>
+		
+	</div>
+		<div class="panel-body" id="panel_home_images" style="overflow-y: scroll hidden;">
+			<div class="row" id="home_images_miss">
+			<% if @posts.any? %>
+				<% @posts.each do |post| %>
+					<div class="col-md-4" >
+						<button id="detailpost" data-id="<%= post.id%>" data-status="<%= post.status%>" data-date="<%= post.requestdate%>" data-place="<%= post.place%>" data-city="<%= post.city%>" data-relation="<%= post.relation%>" data-gender="<%= post.gender%>" data-mentalstatus="<%= post.mentalstatus%>" data-age="<%= post.age%>" data-name="<%= post.name%>" data-fathername="<%= post.fathername%>" data-clothes="<%= post.clothes%>" data-clothescolor="<%= post.clothescolor%>" data-description="<%= post.description%>" data-image="<%= post.image.url(:medium)%>" data-contact="<%= post.contact%>" data-user-name="<%=post.user.name%>" style="width: 90%; background-color: #A1887F;border: hidden;">
+							<figure style="width:100%;">
+								<a href="#" data-toggle="modal" data-target="#detail-window">
+									<div class="imgwrapper">
+											<%= image_tag post.image.url(:thumb), class:"img-thumbnail" ,style:"height:200px;"%>
+										<center>
+											<figcaption style="background:#333;">
+												<h4 style="text-decoration:none; padding: 0.3em;">Show Detail</h4>
+											</figcaption>
+										</center>
+									</div>
+								</a>
+							</figure>
+						</button>
+					</div>
+				<% end %>
+				<% else %>
+					<div class="row">
+						<div class="col-md-12">
+						<center>
+						<h3> No Search Results Found</h3>
+						</center>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+		<center>
+		<%= will_paginate @post, renderer: BootstrapPagination::Rails %>
+		</center>
+		
+	</div>
+
+
+	<!-- ***************************** Person Detail Window Code ***********************************-->
+	<div class="modal modal-fullscreen fade" id="detail-window" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- Header -->
+				<div class="modal-header">
+					<center><h3 class="modal-title" style="color: #f0f0f0">Person Detail</h3></center>
+				</div>				
+				<!-- Body (form) -->
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-4">
+							<center>
+								<%= image_tag 'img1.jpg', class:"img-responsive", id:"showimage", style:"height:16em; width:40em;"%>
+							</center>
+						</div>
+						<div class="col-md-4">
+							<label style="color: #f0f0f0; margin-bottom: -7px;">Status</label>
+							<br>
+							<label class="btn btn-default btnlabel" id="showstatus"><b></b></label>
+							<br>
+							<label style="color: #f0f0f0; margin-top: 5px; margin-bottom: -7px;">Since</label><br>
+							<label class="btn btn-default btnlabel" id="showdate"><b></b></label>
+							<br>
+							<label style="color: #f0f0f0; margin-top: 5px; margin-bottom: -7px;">Place</label><br>
+							<label class="btn btn-default btnlabel" id="showplace"><b></b></label>
+							<br>
+							<label style="color: #f0f0f0; margin-top: 5px; margin-bottom: -7px;">City</label><br>
+							<label class="btn btn-default btnlabel" id="showcity"><b></b></label>
+						</div>
+						<div class="col-md-4">
+							<label style="color: #f0f0f0; margin-bottom: -7px;">Gender</label><br>
+							<label class="btn btn-default btnlabel" id="showgender"><b></b></label>
+							<br>
+							<label style="color: #f0f0f0; margin-top: 5px; margin-bottom: -7px;">Mental Status</label><br>
+							<label class="btn btn-default btnlabel" id="showmentalstatus"><b></b></label>
+							<br>
+							<label style="color: #f0f0f0; margin-top: 5px; margin-bottom: -7px;">Age</label><br>
+							<label class="btn btn-default btnlabel" id="showage"><b></b></label>
+							<label style="color: #f0f0f0; margin-top: 5px; margin-bottom: -7px;">Clothes</label>
+							<br>
+							<label class="btn btn-default btnlabel" id="showclothes"><b></b></label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<label style="color: #f0f0f0; margin-top: 5px; margin-bottom: -7px;">Name</label>
+							<br>
+							<label class="btn btn-default btnlabel" id="showname"><b></b></label>
+						</div>
+						<div class="col-md-4">
+							<label style="color: #f0f0f0; margin-top: 5px; margin-bottom: -7px;">Father Name</label>
+							<br>
+							<label class="btn btn-default btnlabel" id="showfathername"><b></b></label>
+						</div>
+						<div class="col-md-4">
+							<label style="color: #f0f0f0; margin-top: 5px; margin-bottom: -7px;">Clothes Color</label>
+							<br>
+							<label class="btn btn-default btnlabel" id="showclothcolor"><b></b></label>
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-md-12">
+							<label style="color: #f0f0f0; margin-top: 5px; margin-bottom: -7px;">Description</label><br>
+							<textarea readonly class="btntextarea" id="showdescription" rows="7"></textarea>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Submit Button (footer)-->
+				<div class="modal-footer">
+					<center>
+						<button class="btn btn-primary" data-toggle="modal" data-target="#detail-window1">Posted By</button>
+						<button class="btn btn-danger" data-dismiss="modal">Close</button>
+					</center>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- *********************************** End of Person Window *********************************** -->
+	
+<!-- ***************************** posted by Window Code ***********************************-->
+	<div class="modal fade" id="detail-window1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- Header -->
+				<div class="modal-header">
+					<h3 class="modal-title">Posted By</h3>
+				</div>
+				<!-- Body (form) -->
+				<div class="modal-body">
+					<form role="form">
+						<div class="form-group">
+							<label>Name</label>
+							<label class="btn btn-default btnlabel" id="showusername"><b></b></label>
+						</div>
+						<div class="form-group">
+							<label>Contact</label>
+							<label class="btn btn-default btnlabel" id="showcontact"><b></b></label>
+						</div>
+						<div class="form-group">
+							<label>Relation</label>
+							<label class="btn btn-default btnlabel" id="showrelation"><b></b></label>
+						</div>
+					</form>
+				</div>
+				<!-- Submit Button (footer)-->
+				<div class="modal-footer">
+					<button class="btn btn-primary btn-block" data-dismiss="modal" id="closep">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- *********************************** End of Posted by Window********************************* -->

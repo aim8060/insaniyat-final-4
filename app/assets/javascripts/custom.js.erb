@@ -22,8 +22,47 @@ function nowpost1()
   $("#already").show();
 }
 
+function checkdate(){
+    
+    var year = $("#post_requestdate_1i").val();
+    var month = $("#post_requestdate_2i").val();
+    var day = $("#post_requestdate_3i").val();
+    alert(month)
+    if(year == ""){
+        $(".dateerrorspan").css('display' , 'none');
+        var span = "<span class='dateerrorspan' style='color:red;'>**Please Enter year**</sapn>";
+        $(".dateerror").append(span);
+        e.preventDefault();    
+        return false;
+    }
+
+    else if(year != "" && day != "" && month == ""){
+        $(".dateerrorspan").css('display' , 'none');
+        var span = "<span class='dateerrorspan' style='color:red;'>**Please Enter Month**</sapn>";
+        $(".dateerror").append(span);
+        e.preventDefault();    
+        return false;
+    }
+}
+
 $(document).ready(function() 
 {
+    $('#searchform').submit(function(e){
+        //alert($(".datesearch").val());
+        //alert($(".status").val());
+        //alert($(".Name").val() == "");
+
+        if($(".datesearch").val() == "" && $(".status").val() == "" && $(".Name").val() == "" && $(".FatherName").val() == "" && $(".age").val() == "" && $(".mentalstatus").val() == ""){
+            $(".errorspan").css('display' , 'none');
+            var span = "<span class='errorspan' style='color:red;'>**You have to fill some fields for Search**</sapn>";
+            $(".error").append(span);
+            e.preventDefault();    
+            return false;
+        }
+        return true;
+    })
+
+
     var u1
     $(document).on("click", '#uphone', function() {
         $('#postphone').val("");
@@ -87,13 +126,12 @@ $(document).ready(function()
     /************************ End Login Code ***************************/
 
     /************************ Start Sign Up Code ***************************/
-    $(document).on("keyup", '#signupphoneno', function() {
-           forSignUp();
-    });
+    
     $(document).on("blur", '#signupphoneno', function() {
            forSignUp();
     }); 
     function forSignUp(){
+        $('#signupclick').prop('disabled' , true);
         var phonelength = $('#signupphoneno').val();
         if(phonelength.length != 11){
             $("#signphonein").show();
@@ -110,14 +148,18 @@ $(document).ready(function()
              success: function(data, textStatus, xhr) {
                         if(data == "-1")
                         {
+                          $('#codesend').css('display' , 'block');
+                          $('#verify-pin').css('display' , 'block');
                           $("#signphone").hide();
-                          $('#signupclick').prop('disabled' , false);
-                          $('.submit').prop('disabled' , false);        
+                          $('#signupclick').prop('disabled' , true);
+                          $('.submit').prop('disabled' , true);
+                          $('#signuppassword').css('display' , 'none');        
                         }
                         else
                         {
+                          $('#verify-pin').css('display' , 'none');
                           $("#signphone").show();
-                          $('#signupclick').prop('disabled' , true);
+                          $('#signupclick').prop('disabled', true);
                         }
                       },
                error: function() {
@@ -125,6 +167,47 @@ $(document).ready(function()
                       }
         });
     }
+
+
+    $(document).on("click", '#verifynumber', function() {
+        $('.pinspan').css('display','none');
+        var pinlength = $('#pinfield').val();
+        if(pinlength.length != 4){
+            var phonecode1 = "<label class='label label-danger' style='font-weight:bold;font-size:06.em'>Enter 4-Digit Pin</label>";
+            $("#pinfield").after(phonecode1);
+            //$('#signupclick').prop('disabled' , true);
+            return;
+        }
+        $.ajax({
+                 url: "/phonenumbers/verify", // Route to the Script Controller method
+                type: "post",
+            dataType: "json",
+                data: {phoneno: $('#signupphoneno').val() , pin: $('#pinfield').val()}, // This goes to Controller in params hash, i.e. params[:file_name]
+            complete: function() {},
+             success: function(data, textStatus, xhr) {
+                        if(data == "1")
+                        {
+                            $('#verify-pin').css('display' , 'none');
+                            $('#signuppassword').css('display' , 'block');
+                            $('#signupclick').prop('disabled' , false);    
+                            //$('#verify-pin').css('display' , 'none');
+                            //var phonecode1= "<span id='phonespan' style='color:red;'>Phone Number Already Register</span>"
+                            //$("#signupphoneno").after(phonecode1);
+                            //$('#signupclick').prop('disabled' , true);
+                        }
+                        else
+                        {
+                            var phonecode2 = "<label class='label label-danger' style='font-weight:bold;font-size:06.em'>Wrong Pin</label>";
+                            $("#pinfield").after(phonecode2);
+                            //$('#verify-pin').css('display' , 'block');
+                            //$('.submit').prop('disabled' , false);        
+                        }
+                      },
+               error: function() {
+                        alert("Ajax error!");
+                      }
+        });           
+    });
     /************************ End Sign Up Code ***************************/
 
  

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 			get 'getallfound'
 			post 'makepost'
 			post 'makepostnot'
+			get 'search'
 		end
 	end
 
@@ -30,6 +31,12 @@ Rails.application.routes.draw do
 	resources :unregister do
 		collection do
 			post 'createUser'
+		end
+	end
+
+	resources :phonenumbers do
+		collection do
+			post 'verify'
 		end
 	end
 
