@@ -133,6 +133,28 @@ class PostsController < ApplicationController
     end
   end
 
+  def profile
+    #debugger
+    @posts = Post.where(:user_id => params[:id]).order("created_at DESC").paginate(page: params[:page], per_page: 9)
+    
+  end
+   def updatepost
+    #debugger
+    @post = Post.where(:id => params[:post][:id])
+    @post.update(name: params[:post][:name] , fathername: params[:post][:fathername] , status: params[:post][:status] , gender: params[:post][:gender] , place: params[:post][:place] , city: params[:post][:city] , requestdate: params[:post][:requestdate] , mentalstatus: params[:post][:mentalstatus] , age: params[:post][:age] , clothes: params[:post][:clothes] , clothescolor: params[:post][:clothescolor] , description: params[:post][:description])
+    @user = User.new(session[:u])
+    redirect_to profile_posts_path(:id => @user.id)
+  end
+
+  
+  def deletepost
+    #debugger
+    @post = Post.destroy(params[:id])
+    @user = User.new(session[:u])
+    redirect_to profile_posts_path(:id => @user.id)
+    #@post.destroy
+  end
+
 	private
 		def permit_post
 			params.require(:post).permit(:status,:requestdate,:place,:city,:relation,:gender,:mentalstatus,:name,:fathername,:age,:clothes,:clothescolor,:description,:image,:contact,:user_id)

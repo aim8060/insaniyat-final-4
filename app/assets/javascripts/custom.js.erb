@@ -27,7 +27,6 @@ function checkdate(){
     var year = $("#post_requestdate_1i").val();
     var month = $("#post_requestdate_2i").val();
     var day = $("#post_requestdate_3i").val();
-    alert(month)
     if(year == ""){
         $(".dateerrorspan").css('display' , 'none');
         var span = "<span class='dateerrorspan' style='color:red;'>**Please Enter year**</sapn>";
@@ -379,6 +378,25 @@ $(document).ready(function()
             $('#showcontact').text($(this).attr('data-contact')).css('font-weight' , 'bold');
     });
 
+
+    $(document).on("click", '#updatepost', function() {
+            var sr = $("#detailpost").attr('data-image');
+            $('#postimg').attr( "src",sr);
+            $('#postid').val($("#detailpost").attr('data-id'));
+            $('#showstatus1').val($("#detailpost").attr('data-status'));
+            $('#showdate1').val($("#detailpost").attr('data-date'));
+            $('#showplace1').val($("#detailpost").attr('data-place'));
+            $('#showcity1').val($("#detailpost").attr('data-city'));            
+            $('#showgender1').val($("#detailpost").attr('data-gender'));
+            $('#showage1').val($("#detailpost").attr('data-age'));
+            $('#showmentalstatus1').val($("#detailpost").attr('data-mentalstatus'));
+            $('#showname1').val($("#detailpost").attr('data-name'));
+            $('#showfathername1').val($("#detailpost").attr('data-fathername'));
+            $('#showclothes1').val($("#detailpost").attr('data-clothes'));
+            $('#showclothcolor1').val($("#detailpost").attr('data-clothescolor'));
+            $('#showdescription1').val($("#detailpost").attr('data-description'));         
+
+    });
     /* *********************** Full Screen Modal *******************************8*/
     $(".modal-fullscreen").on('show.bs.modal', function () {
         setTimeout( function() {

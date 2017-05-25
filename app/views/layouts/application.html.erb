@@ -59,8 +59,8 @@
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong><%= us.name%></strong> <b class="caret"></b></a>
 		          			<ul class="dropdown-menu">
-		            			<li><a href="#">Profile</a></li>
-		            			<li><a href="#">Settings</a></li>
+		            			<li><%= link_to "Profile", profile_posts_path(:id => us.id) %></li>
+		            			
 		            			<li class="divider"></li>
 		            			<li><%= link_to "Logout","/users/logout"%></li>
 		          			</ul>
@@ -137,7 +137,7 @@
 
 								<div class="form-group">
 									<div id="verify-pin" style="display: none;">
-										<label class="label label-success" style="font-size: 1em;">Sending a Verification Code at Your Number</label>
+										<label class="label label-success" style="font-size:1em;margin-bottom:0.5em;margin-top:0.5em;">Sending a Verification Code at Your Number</label>
 									  <div class="form-group">
 									    <%= number_field_tag :pin ,nil , {id: "pinfield",class:"form-control", placeholder:"Enter You Pin"} %>
 									  </div>

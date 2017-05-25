@@ -13,6 +13,9 @@ Rails.application.routes.draw do
 			post 'makepost'
 			post 'makepostnot'
 			get 'search'
+			get 'updatepost'
+			get 'deletepost'
+			get 'profile'
 		end
 	end
 
